@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ClienteService {
     private final ClienteRepository repository;
@@ -25,6 +27,7 @@ public class ClienteService {
     public Page<ClienteModel> findAllClients(Pageable pageable) {
         return repository.findAll(pageable);
     }
+
 
 
 }

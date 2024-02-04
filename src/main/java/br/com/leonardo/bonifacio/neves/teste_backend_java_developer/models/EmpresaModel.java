@@ -1,5 +1,6 @@
 package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_COMPANY")
@@ -24,4 +27,8 @@ public class EmpresaModel {
     private BigDecimal taxas;
 
     private BigDecimal balance;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "empresas")
+    private List<ClienteModel> clientes = new ArrayList<>();
 }

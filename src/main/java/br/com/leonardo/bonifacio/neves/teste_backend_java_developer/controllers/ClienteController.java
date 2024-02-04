@@ -41,13 +41,13 @@ public class ClienteController {
 
     @PostMapping("/transacao/saque")
     public ResponseEntity clientTransactionWithdrawals(@RequestBody @Valid TransactionDto data) {
-        transactionService.transactionWithdrawals(data);
+        transactionService.transactionWithdrawalsClient(data);
         return ResponseEntity.status(HttpStatus.OK).body(data);
     }
 
     @PostMapping("/transacao/deposito")
     public ResponseEntity clientTransactionDeposit(@RequestBody @Valid TransactionDto data) {
-        transactionService.transactionDeposit(data);
+        transactionService.transactionDepositClient(data);
         return ResponseEntity.status(HttpStatus.OK).body(data);
     }
 
