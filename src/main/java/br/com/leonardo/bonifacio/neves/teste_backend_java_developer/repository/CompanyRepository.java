@@ -4,4 +4,5 @@ import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.Empre
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CompanyRepository extends JpaRepository<EmpresaModel, Long> {
+    EmpresaModel findEmpresaById(Long empresa);
 }

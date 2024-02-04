@@ -1,6 +1,8 @@
 package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.enums;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Random;
 
 public enum TaxaEmpresa {
     TAXA_SISTEMA(new BigDecimal("10.5")),
@@ -11,8 +13,19 @@ public enum TaxaEmpresa {
 
     private final BigDecimal valor;
 
-
     TaxaEmpresa(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    private static final TaxaEmpresa[] VALUES = values();
+    private static final int SIZE = VALUES.length;
+    private static final Random RANDOM = new Random();
+
+    public static TaxaEmpresa getRandomValorEnum() {
+        return VALUES[RANDOM.nextInt(SIZE)];
     }
 }

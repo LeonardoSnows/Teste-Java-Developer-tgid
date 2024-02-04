@@ -1,8 +1,10 @@
 package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.controllers;
 
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.ClientRecord;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionDto;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.ClienteModel;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.ClienteService;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.TransacionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
+    @Autowired
+    private TransacionService transacionService;
+
     @PostMapping("/registrar")
     public ResponseEntity clientRegister(@RequestBody @Valid ClientRecord data) {
         var clientModel = new ClienteModel();
@@ -29,11 +34,15 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ClienteModel>> getAllClients(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)Pageable pageable){
+    public ResponseEntity<Page<ClienteModel>> getAllClients(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.findAllClients(pageable));
     }
 
-    @PostMapping
-    public ResponseEntity
+
+    @PostMapping("/transacao/saque")
+    public ResponseEntity clientTransacionWithdrawals(@RequestBody @Valid TransactionDto data) {
+        transacionService.transactionWithdrawals(data);
+        return ResponseEntity.status(HttpStatus.OK).body(data);
+    }
 
 }

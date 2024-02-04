@@ -19,13 +19,11 @@ public class ClienteModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-
     private String name;
 
     private String socialName;
 
-    private BigDecimal saldo;
+    private BigDecimal balance;
 
     private String cpf;
 

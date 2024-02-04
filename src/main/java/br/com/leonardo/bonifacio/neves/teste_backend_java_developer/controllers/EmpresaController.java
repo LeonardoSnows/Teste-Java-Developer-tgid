@@ -1,7 +1,7 @@
 package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.controllers;
 
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.CompanyRecord;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.ClienteModel;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.enums.TaxaEmpresa;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.EmpresaModel;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.EmpresaService;
 import jakarta.validation.Valid;
@@ -28,6 +28,7 @@ public class EmpresaController {
     public ResponseEntity companyRegister(@RequestBody @Valid CompanyRecord company) {
         var empresaModel = new EmpresaModel();
         BeanUtils.copyProperties(company, empresaModel);
+        empresaModel.setTaxas(TaxaEmpresa.getRandomValorEnum().getValor());
         return ResponseEntity.status(HttpStatus.CREATED).body(empresaService.registerCompany(empresaModel));
     }
 

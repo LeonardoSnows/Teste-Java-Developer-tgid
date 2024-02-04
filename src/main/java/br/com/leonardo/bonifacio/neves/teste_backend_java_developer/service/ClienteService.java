@@ -2,6 +2,7 @@ package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service;
 
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionDto;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.ClienteModel;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.EmpresaModel;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repository.ClienteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,5 +26,5 @@ public class ClienteService {
         return repository.findAll(pageable);
     }
 
-    
+
 }

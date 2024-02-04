@@ -23,5 +23,5 @@ public class EmpresaModel {
 
     private BigDecimal taxas;
 
-    private BigDecimal saldo;
+    private BigDecimal balance;
 }
