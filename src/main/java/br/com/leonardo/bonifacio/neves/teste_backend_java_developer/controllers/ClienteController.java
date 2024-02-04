@@ -4,7 +4,7 @@ import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.ClientR
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionDto;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.ClienteModel;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.ClienteService;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.TransacionService;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @Autowired
-    private TransacionService transacionService;
+    private TransactionService transactionService;
 
     @PostMapping("/registrar")
     public ResponseEntity clientRegister(@RequestBody @Valid ClientRecord data) {
@@ -40,8 +40,14 @@ public class ClienteController {
 
 
     @PostMapping("/transacao/saque")
-    public ResponseEntity clientTransacionWithdrawals(@RequestBody @Valid TransactionDto data) {
-        transacionService.transactionWithdrawals(data);
+    public ResponseEntity clientTransactionWithdrawals(@RequestBody @Valid TransactionDto data) {
+        transactionService.transactionWithdrawals(data);
+        return ResponseEntity.status(HttpStatus.OK).body(data);
+    }
+
+    @PostMapping("/transacao/deposito")
+    public ResponseEntity clientTransactionDeposit(@RequestBody @Valid TransactionDto data) {
+        transactionService.transactionDeposit(data);
         return ResponseEntity.status(HttpStatus.OK).body(data);
     }
 
