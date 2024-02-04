@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "TB_CLIENT")
 @Getter
@@ -21,9 +23,10 @@ public class ClienteModel {
 
     private String name;
 
-
     private String socialName;
 
-    @CPF(message = "cpf inválido")
+    private BigDecimal saldo;
+
     private String cpf;
+
 }

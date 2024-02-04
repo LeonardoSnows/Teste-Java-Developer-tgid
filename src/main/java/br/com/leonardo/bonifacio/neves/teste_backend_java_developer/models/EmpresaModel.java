@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CNPJ;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "TB_COMPANY")
 @Getter
@@ -15,10 +17,11 @@ public class EmpresaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private String nameCompany;
 
-    @CNPJ
-    @NotNull
     private String cnpj;
+
+    private BigDecimal taxas;
+
+    private BigDecimal saldo;
 }

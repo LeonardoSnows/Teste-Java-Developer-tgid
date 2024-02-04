@@ -33,4 +33,7 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.findAllClients(pageable));
     }
 
+    @PostMapping
+    public ResponseEntity
+
 }
