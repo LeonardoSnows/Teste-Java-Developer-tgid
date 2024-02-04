@@ -2,12 +2,13 @@ package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.controllers
 
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.CompanyRecord;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionCompanyDto;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionDto;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionWithdrawalsCompany;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.enums.TaxaEmpresa;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.EmpresaModel;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.EmpresaService;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.SMSService;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.TransactionService;
+import com.twilio.exception.ApiException;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/empresa")
+@RequestMapping("/servico/empresa")
 public class EmpresaController {
 
     @Autowired
     private TransactionService transactionService;
 
-    private final EmpresaService empresaService;
 
-    public EmpresaController(EmpresaService empresaService) {
-        this.empresaService = empresaService;
-    }
+
+    @Autowired
+    private EmpresaService empresaService;
 
     @PostMapping("/registrar")
     public ResponseEntity companyRegister(@RequestBody @Valid CompanyRecord company) {

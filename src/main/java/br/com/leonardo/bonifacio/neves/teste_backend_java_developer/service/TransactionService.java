@@ -7,6 +7,7 @@ import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.Clien
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.EmpresaModel;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repository.ClienteRepository;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repository.CompanyRepository;
+import com.twilio.exception.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,9 @@ public class TransactionService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private SMSService smsService;
+
     @Transactional
     public void transactionWithdrawalsClient(TransactionDto transactionDto) {
         ClienteModel client = this.clienteRepository.findClienteById(transactionDto.cliente());
@@ -31,16 +35,25 @@ public class TransactionService {
         var balanceCompany = company.getBalance();
 
         if (!validaSaldo(balanceCliente, transactionDto.value()) || !validaSaldo(balanceCompany, transactionDto.value())) {
-            throw new RuntimeException("Valor do saque maior do que o saldo da conta empresa/cliente");
+            throw new RuntimeException("O valor do saque é maior que o saldo da conta do cliente.");
         }
 
         var validaTaxa = validaValoresTaxas(transactionDto.value(), taxaCompany);
         if (!validaTaxa) {
-            throw new RuntimeException("Valor de Taxa maior do que o valor enviado para saque");
+            throw new RuntimeException("O valor da taxa é superior ao valor enviado para saque.");
         }
 
         company.setBalance(balanceCompany.subtract(transactionDto.value()).setScale(2, RoundingMode.HALF_EVEN));
         client.setBalance(balanceCliente.add(transactionDto.value().subtract(taxaCompany)).setScale(2, RoundingMode.HALF_EVEN));
+        enviaSmsCliente(client);
+    }
+
+    private void enviaSmsCliente(ClienteModel client) {
+        try {
+            smsService.send(client);
+        } catch (ApiException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Transactional
@@ -53,21 +66,23 @@ public class TransactionService {
         var balanceCompany = company.getBalance();
 
         if (!validaValoresTaxas(transactionDto.value(), taxaCompany)) {
-            throw new RuntimeException("Valor de Taxa maior do que o valor enviado para saque");
+            throw new RuntimeException("O valor da taxa é superior ao valor enviado para saque.");
         }
 
         client.setBalance(balanceCliente.subtract(transactionDto.value()).setScale(2, RoundingMode.HALF_EVEN));
         company.setBalance(balanceCompany.add(transactionDto.value().subtract(taxaCompany)).setScale(2, RoundingMode.HALF_EVEN));
+
+        enviaSmsCliente(client);
     }
 
     @Transactional
     public void transactionWithdrawalsCompany(TransactionWithdrawalsCompany transactionCompanyDto) {
+
         ClienteModel client = this.clienteRepository.findClienteById(transactionCompanyDto.clientId());
         EmpresaModel company = this.companyRepository.findEmpresaById(transactionCompanyDto.company());
 
-        if (!companyContainsClient(client, company)) {
-            throw new RuntimeException("Cliente nao cadastrado na empresa.");
-        }
+        if (!companyContainsClient(client, company))
+            throw new RuntimeException("Cliente não cadastrado na empresa.");
 
         var taxaCompany = company.getTaxas();
 
@@ -82,33 +97,34 @@ public class TransactionService {
         }
 
         company.setBalance(balanceCompany.add(transactionCompanyDto.value().subtract(taxaCompany)).setScale(2, RoundingMode.HALF_EVEN));
+
+        enviaSmsCliente(client);
     }
 
     @Transactional
     public void transactionDepositCompany(TransactionCompanyDto transactionCompanyDto) {
+
         ClienteModel client = this.clienteRepository.findClienteById(transactionCompanyDto.clientId());
         EmpresaModel company = this.companyRepository.findEmpresaById(transactionCompanyDto.company());
         EmpresaModel targetCompany = this.companyRepository.findEmpresaById(transactionCompanyDto.targetCompany());
 
-        if (!companyContainsClient(client, company)) {
-            throw new RuntimeException("Cliente nao cadastrado na empresa.");
-        }
+        if (!companyContainsClient(client, company)) throw new RuntimeException("Cliente não cadastrado na empresa.");
 
         var taxaCompany = company.getTaxas();
 
         var balanceCompany = company.getBalance();
         var balanceTargetCompany = targetCompany.getBalance();
 
-        if (!validaSaldo(balanceCompany, transactionCompanyDto.value())) {
+        if (!validaSaldo(balanceCompany, transactionCompanyDto.value()))
             throw new RuntimeException("O valor do saque é maior que o saldo da conta da empresa.");
-        }
 
-        if (!validaValoresTaxas(transactionCompanyDto.value(), taxaCompany)) {
+        if (!validaValoresTaxas(transactionCompanyDto.value(), taxaCompany))
             throw new RuntimeException("O valor da taxa é superior ao valor enviado para saque.");
-        }
 
         company.setBalance(balanceTargetCompany.subtract(transactionCompanyDto.value()).setScale(2, RoundingMode.HALF_EVEN));
         targetCompany.setBalance(balanceCompany.add(transactionCompanyDto.value().subtract(taxaCompany)).setScale(2, RoundingMode.HALF_EVEN));
+
+        enviaSmsCliente(client);
     }
 
     public boolean companyContainsClient(ClienteModel client, EmpresaModel company) {

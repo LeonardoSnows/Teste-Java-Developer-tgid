@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.math.BigDecimal;
@@ -31,6 +32,12 @@ public record ClientRecord(
         @NotNull(message = "Campo Saldo nao pode ser nulo")
         @JsonProperty("Saldo")
         BigDecimal balance,
+
+        @NotNull(message = "Campo Celular nao pode ser nulo")
+        @NotEmpty(message = "Campo Celular nao pode ser vazio")
+        @JsonProperty("Celular")
+        @Pattern(regexp = "^\\+[1-9]\\d{1,14}$", message ="O numero deve seguir o padrão [+] [Código do país] [número de assinante incluindo código de área]")
+        String clientNumber,
 
         @NotNull
         @JsonProperty("Empresa")
