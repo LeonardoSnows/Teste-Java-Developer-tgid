@@ -4,8 +4,9 @@
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=black)
 ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=black)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
-For send SMS , I used the Twilio SDK
+For send SMS , I used the Twilio SDK.
 
 This API was made for the challenge of the company Tgid - Transform and grow in digital
 
@@ -16,7 +17,8 @@ This API was made for the challenge of the company Tgid - Transform and grow in 
 - [Swagger](#swagger)
 - [API Endpoints](#api-endpoints)
 - [Body Values](#body-values)
-
+- [SMS](#sms)
+- [Docker Compose](#docker-compose)
 
 ## Goals
 1. O sistema deve conter ao menos dois usuários: Empresa e Cliente
@@ -116,6 +118,33 @@ POST /servico/empresa/transacao/saque
 }
 ```
 
+## SMS
+For sending SMS: 
 
+1. Create an account in: https://www.twilio.com/pt-br
+2. Get your SID and your token.
+3. Create a number in Twilio.
+4. Put the values in resource/application.properties:
+```
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_PHONE_NUMBER=
+```
+
+## Docker Compose
+```
+version: "3.8"
+
+services:
+  postgres-compose:
+    image: postgres
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "challenge"
+    volumes:
+      - <where you want to save>:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+```
 
 
