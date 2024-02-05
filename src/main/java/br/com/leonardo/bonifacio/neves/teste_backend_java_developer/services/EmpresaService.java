@@ -1,8 +1,7 @@
-package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service;
+package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.services;
 
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.ClienteModel;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.EmpresaModel;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repository.CompanyRepository;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repositories.CompanyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

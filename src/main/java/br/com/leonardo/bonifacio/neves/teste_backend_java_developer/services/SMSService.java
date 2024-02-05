@@ -1,4 +1,4 @@
-package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service;
+package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.services;
 
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.ClienteModel;
 import com.twilio.Twilio;
@@ -7,7 +7,6 @@ import com.twilio.type.PhoneNumber;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 
 @Service
 @Slf4j

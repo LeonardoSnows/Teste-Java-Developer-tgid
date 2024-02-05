@@ -1,16 +1,16 @@
-package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service;
+package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.services;
 
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionCompanyDto;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionDto;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionWithdrawalsCompany;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.exceptions.CompanyContainsClientException;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.exceptions.CompanyNotFound;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.exceptions.InvalidBalanceClientException;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.exceptions.InvalidBalanceCompanyException;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.exceptions.InvalidValueException;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.ClienteModel;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.EmpresaModel;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repository.ClienteRepository;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repository.CompanyRepository;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repositories.ClienteRepository;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repositories.CompanyRepository;
 import com.twilio.exception.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,8 +88,7 @@ public class TransactionService {
         ClienteModel client = this.clienteRepository.findClienteById(transactionCompanyDto.clientId());
         EmpresaModel company = this.companyRepository.findEmpresaById(transactionCompanyDto.company());
 
-        if (!companyContainsClient(client, company))
-            throw new CompanyContainsClientException();
+        if (!companyContainsClient(client, company)) throw new CompanyNotFound();
 
         var taxaCompany = company.getTaxas();
 
@@ -115,7 +114,7 @@ public class TransactionService {
         EmpresaModel company = this.companyRepository.findEmpresaById(transactionCompanyDto.company());
         EmpresaModel targetCompany = this.companyRepository.findEmpresaById(transactionCompanyDto.targetCompany());
 
-        if (!companyContainsClient(client, company)) throw new RuntimeException("Cliente não cadastrado na empresa.");
+        if (!companyContainsClient(client, company)) throw new CompanyNotFound();
 
         var taxaCompany = company.getTaxas();
 

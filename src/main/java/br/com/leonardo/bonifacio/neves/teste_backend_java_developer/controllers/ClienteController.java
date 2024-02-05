@@ -3,8 +3,8 @@ package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.controllers
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.ClientRecord;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionDto;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.ClienteModel;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.ClienteService;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service.TransactionService;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.services.ClienteService;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.services.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

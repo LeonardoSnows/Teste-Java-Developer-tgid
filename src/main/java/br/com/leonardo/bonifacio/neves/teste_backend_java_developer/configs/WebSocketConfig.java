@@ -1,4 +1,4 @@
-package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.config;
+package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

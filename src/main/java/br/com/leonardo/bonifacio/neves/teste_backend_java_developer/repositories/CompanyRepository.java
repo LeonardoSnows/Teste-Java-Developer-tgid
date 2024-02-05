@@ -1,4 +1,4 @@
-package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repository;
+package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repositories;
 
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.EmpresaModel;
 import org.springframework.data.jpa.repository.JpaRepository;

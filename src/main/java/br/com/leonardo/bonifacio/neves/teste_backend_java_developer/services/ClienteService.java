@@ -1,15 +1,11 @@
-package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.service;
+package br.com.leonardo.bonifacio.neves.teste_backend_java_developer.services;
 
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.dtos.TransactionDto;
 import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.ClienteModel;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.models.EmpresaModel;
-import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repository.ClienteRepository;
+import br.com.leonardo.bonifacio.neves.teste_backend_java_developer.repositories.ClienteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class ClienteService {
